@@ -8,6 +8,8 @@
     theme.update(t => t === 'dark' ? 'light' : 'dark');
   }
 
+  const version = __APP_VERSION__;
+
   let newName = '';
   let confirmTarget = null;
 
@@ -89,6 +91,8 @@
       {/each}
     </ul>
   </section>
+
+  <p class="version">KneeFit v{version}</p>
 </div>
 
 <ConfirmDialog
@@ -201,4 +205,12 @@
   }
 
   .theme-icon { font-size: 1rem; }
+
+  .version {
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    padding: 1rem 0 0.5rem;
+    opacity: 0.6;
+  }
 </style>

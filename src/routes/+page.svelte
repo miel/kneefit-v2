@@ -28,11 +28,11 @@
   </div>
 
   <div class="quick-actions">
-    <button class="action-card exercise" on:click={() => goto(`${base}/log-exercise`)} type="button">
+    <button class="action-card exercise" on:click={() => goto(`${base}/log-exercise`, { replaceState: true })} type="button">
       <span class="action-icon">🏋️</span>
       <span class="action-label">Log Exercise</span>
     </button>
-    <button class="action-card pain" on:click={() => goto(`${base}/log-pain`)} type="button">
+    <button class="action-card pain" on:click={() => goto(`${base}/log-pain`, { replaceState: true })} type="button">
       <span class="action-icon">📊</span>
       <span class="action-label">Log Pain</span>
     </button>

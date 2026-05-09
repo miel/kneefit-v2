@@ -30,7 +30,7 @@
     };
     await logPain(assessment);
     showToast('Pain logged');
-    goto(`${base}/history`);
+    goto(`${base}/history`, { replaceState: true });
   }
 </script>
 

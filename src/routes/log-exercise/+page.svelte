@@ -29,7 +29,7 @@
     };
     await logExercise(log);
     showToast('Session logged');
-    goto(`${base}/history`);
+    goto(`${base}/history`, { replaceState: true });
   }
 </script>
 

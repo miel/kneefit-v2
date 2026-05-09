@@ -16,13 +16,17 @@
     if (href === `${base}/`) return p === href || p === `${base}`;
     return p.startsWith(href);
   }
+
+  function navigate(href) {
+    goto(href, { replaceState: true, noScroll: false });
+  }
 </script>
 
 <nav>
   {#each tabs as tab}
     <button
       class:active={isActive(tab.href)}
-      on:click={() => goto(tab.href)}
+      on:click={() => navigate(tab.href)}
       type="button"
     >
       <span class="icon">{tab.icon}</span>
