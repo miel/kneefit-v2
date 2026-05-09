@@ -1,8 +1,7 @@
 <script>
-  import { goto } from '$app/navigation';
-  import { base } from '$app/paths';
   import PainScaleInput from '$lib/components/PainScaleInput.svelte';
   import { logPain, showToast } from '$lib/stores.js';
+  import { navigate } from '$lib/navigation.js';
   import { todayISO, autoTimeSlot } from '$lib/utils.js';
   import { TIME_SLOTS } from '$lib/constants.js';
 
@@ -18,19 +17,10 @@
   async function handleSubmit(e) {
     e.preventDefault();
     submitting = true;
-    const assessment = {
-      id: Date.now(),
-      date,
-      timeSlot,
-      restPain,
-      activityPain,
-      touchPain,
-      scaleType,
-      notes
-    };
+    const assessment = { id: Date.now(), date, timeSlot, restPain, activityPain, touchPain, scaleType, notes };
     await logPain(assessment);
     showToast('Pain logged');
-    goto(`${base}/history`, { replaceState: true });
+    navigate('history');
   }
 </script>
 
@@ -54,12 +44,7 @@
 
     <fieldset class="field pain-fieldset">
       <legend class="field-legend">Pain Scale</legend>
-      <PainScaleInput
-        bind:scaleType
-        bind:restPain
-        bind:activityPain
-        bind:touchPain
-      />
+      <PainScaleInput bind:scaleType bind:restPain bind:activityPain bind:touchPain />
     </fieldset>
 
     <div class="field">
@@ -76,42 +61,11 @@
 <style>
   .page { padding-top: 0.5rem; }
   h1 { margin-bottom: 1.5rem; }
-
   form { display: flex; flex-direction: column; gap: 1rem; }
-
   .field { display: flex; flex-direction: column; gap: 0.4rem; }
-
-  .field label {
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--color-text-muted);
-  }
-
-  .submit-btn {
-    margin-top: 0.5rem;
-    padding: 1rem;
-    border-radius: var(--radius);
-    background: var(--color-accent);
-    color: #0d1b2a;
-    font-weight: 700;
-    font-size: 1rem;
-  }
-
+  .field label { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-muted); }
+  .submit-btn { margin-top: 0.5rem; padding: 1rem; border-radius: var(--radius); background: var(--color-accent); color: #0d1b2a; font-weight: 700; font-size: 1rem; }
   .submit-btn:disabled { opacity: 0.6; }
-
-  .pain-fieldset {
-    border: none;
-    padding: 0;
-  }
-
-  .field-legend {
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--color-text-muted);
-    margin-bottom: 0.4rem;
-  }
+  .pain-fieldset { border: none; padding: 0; }
+  .field-legend { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-muted); margin-bottom: 0.4rem; }
 </style>

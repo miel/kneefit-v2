@@ -1,8 +1,7 @@
 <script>
-  import { goto } from '$app/navigation';
-  import { base } from '$app/paths';
   import ExerciseSelect from '$lib/components/ExerciseSelect.svelte';
   import { lastExerciseLog, logExercise, showToast } from '$lib/stores.js';
+  import { navigate } from '$lib/navigation.js';
   import { todayISO, autoTimeSlot } from '$lib/utils.js';
   import { TIME_SLOTS } from '$lib/constants.js';
 
@@ -29,7 +28,7 @@
     };
     await logExercise(log);
     showToast('Session logged');
-    goto(`${base}/history`, { replaceState: true });
+    navigate('history');
   }
 </script>
 
@@ -92,31 +91,10 @@
 <style>
   .page { padding-top: 0.5rem; }
   h1 { margin-bottom: 1.5rem; }
-
   form { display: flex; flex-direction: column; gap: 1rem; }
-
   .field { display: flex; flex-direction: column; gap: 0.4rem; }
-
-  .field label {
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--color-text-muted);
-  }
-
+  .field label { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-muted); }
   .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-
-  .submit-btn {
-    margin-top: 0.5rem;
-    padding: 1rem;
-    border-radius: var(--radius);
-    background: var(--color-accent);
-    color: #0d1b2a;
-    font-weight: 700;
-    font-size: 1rem;
-    letter-spacing: 0.02em;
-  }
-
+  .submit-btn { margin-top: 0.5rem; padding: 1rem; border-radius: var(--radius); background: var(--color-accent); color: #0d1b2a; font-weight: 700; font-size: 1rem; letter-spacing: 0.02em; }
   .submit-btn:disabled { opacity: 0.6; }
 </style>

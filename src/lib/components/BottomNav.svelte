@@ -1,32 +1,20 @@
 <script>
-  import { goto } from '$app/navigation';
-  import { page } from '$app/stores';
-  import { base } from '$app/paths';
+  import { currentPage, navigate } from '$lib/navigation.js';
 
   const tabs = [
-    { href: `${base}/`, label: 'Home', icon: '🏠' },
-    { href: `${base}/log-exercise`, label: 'Exercise', icon: '🏋️' },
-    { href: `${base}/log-pain`, label: 'Pain', icon: '📊' },
-    { href: `${base}/history`, label: 'History', icon: '📋' },
-    { href: `${base}/settings`, label: 'Settings', icon: '⚙️' }
+    { page: 'home',         label: 'Home',     icon: '🏠' },
+    { page: 'log-exercise', label: 'Exercise',  icon: '🏋️' },
+    { page: 'log-pain',     label: 'Pain',      icon: '📊' },
+    { page: 'history',      label: 'History',   icon: '📋' },
+    { page: 'settings',     label: 'Settings',  icon: '⚙️' }
   ];
-
-  function isActive(href) {
-    const p = $page.url.pathname;
-    if (href === `${base}/`) return p === href || p === `${base}`;
-    return p.startsWith(href);
-  }
-
-  function navigate(href) {
-    goto(href, { replaceState: true, noScroll: false });
-  }
 </script>
 
 <nav>
   {#each tabs as tab}
     <button
-      class:active={isActive(tab.href)}
-      on:click={() => navigate(tab.href)}
+      class:active={$currentPage === tab.page}
+      on:click={() => navigate(tab.page)}
       type="button"
     >
       <span class="icon">{tab.icon}</span>
@@ -62,20 +50,8 @@
     border-radius: 0;
   }
 
-  button.active {
-    color: var(--color-accent);
-  }
+  button.active { color: var(--color-accent); }
 
-  .icon {
-    font-size: 1.25rem;
-    line-height: 1;
-  }
-
-  .label {
-    font-size: 0.625rem;
-    font-weight: 600;
-    margin-top: 0.2rem;
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
-  }
+  .icon  { font-size: 1.25rem; line-height: 1; }
+  .label { font-size: 0.625rem; font-weight: 600; margin-top: 0.2rem; letter-spacing: 0.03em; text-transform: uppercase; }
 </style>
