@@ -1,4 +1,5 @@
 <script>
+  import { goto } from '$app/navigation';
   import { base } from '$app/paths';
   import ExerciseCard from '$lib/components/ExerciseCard.svelte';
   import { exerciseLogs, painAssessments } from '$lib/stores.js';
@@ -27,14 +28,14 @@
   </div>
 
   <div class="quick-actions">
-    <a href="{base}/log-exercise" class="action-card exercise">
+    <button class="action-card exercise" on:click={() => goto(`${base}/log-exercise`)} type="button">
       <span class="action-icon">🏋️</span>
       <span class="action-label">Log Exercise</span>
-    </a>
-    <a href="{base}/log-pain" class="action-card pain">
+    </button>
+    <button class="action-card pain" on:click={() => goto(`${base}/log-pain`)} type="button">
       <span class="action-icon">📊</span>
       <span class="action-label">Log Pain</span>
-    </a>
+    </button>
   </div>
 
   <section class="today-summary">
