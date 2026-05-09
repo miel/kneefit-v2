@@ -45,7 +45,7 @@ function csvCell(val) {
 export function parseV1CSV(text) {
   const lines = text.trim().split(/\r?\n/);
   const errors = [];
-  const logMap = new Map();
+  const logs = [];
   const assessments = [];
   let idOffset = 0;
 
@@ -62,25 +62,19 @@ export function parseV1CSV(text) {
     const syntheticId = Date.now() + idOffset++;
 
     if (type === 'Exercise') {
-      const key = `${date}|${timeSlot}`;
-      if (!logMap.has(key)) {
-        logMap.set(key, {
-          id: syntheticId,
-          date,
-          timeSlot,
-          exercises: [],
-          notes: notes || ''
-        });
-      }
-      const log = logMap.get(key);
-      log.exercises.push({
-        exercise,
-        sets: Number(sets) || 0,
-        restTime: Number(restTime) || 0,
-        weight: Number(weight) || 0,
-        reps: Number(reps) || 0
+      logs.push({
+        id: syntheticId,
+        date,
+        timeSlot,
+        exercises: [{
+          exercise,
+          sets: Number(sets) || 0,
+          restTime: Number(restTime) || 0,
+          weight: Number(weight) || 0,
+          reps: Number(reps) || 0
+        }],
+        notes: notes || ''
       });
-      if (!log.notes && notes) log.notes = notes;
     } else if (type === 'Pain') {
       assessments.push({
         id: syntheticId,
@@ -95,7 +89,7 @@ export function parseV1CSV(text) {
     }
   }
 
-  return { logs: [...logMap.values()], assessments, errors };
+  return { logs, assessments, errors };
 }
 
 function parseCSVLine(line) {
